@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ms-demo-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service1
+          uri: lb://MS-DEMO-APP-1
+          predicates:
+            - Path=/app1/**
+          filters:
+            - StripPrefix=1
+
+        - id: service2
+          uri: lb://MS-DEMO-APP-2
+          predicates:
+            - Path=/app2/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8092
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
